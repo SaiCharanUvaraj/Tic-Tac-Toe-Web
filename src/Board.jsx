@@ -2,23 +2,16 @@ import { useEffect, useState } from 'react';
 
 const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn}) => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    /*
-    const [turn, setTurn] = useState(() => {
-        const storedTurn = localStorage.getItem('Turn');
-        return storedTurn ? JSON.parse(storedTurn) : "X";
-    });
-    */
-
+    
     useEffect(() => {
         const handleResize = () => { setWindowWidth(window.innerWidth) };
         window.addEventListener('resize', handleResize);
-        //localStorage.setItem("Turn",JSON.stringify(turn));
         return () => {
             window.removeEventListener('resize', handleResize);
         };
     },[]);
 
-    const style = (windowWidth > 700) ? 'h-40 w-40 bg-none backdrop-blur-md border-4 border-white/20 rounded-2xl hover:bg-white/30 transition duration-300' : 'h-32 w-32 bg-none backdrop-blur-md border-4 border-white/20 rounded-2xl hover:bg-white/30 transition duration-300';
+    const style = (windowWidth > 700) ? 'h-40 w-40 bg-none backdrop-blur-md border-4 border-white/20 rounded-2xl hover:bg-white/30 transition duration-300 flex justify-center items-center' : 'h-32 w-32 bg-none backdrop-blur-md border-4 border-white/20 rounded-2xl hover:bg-white/30 transition duration-300 flex justify-center items-center';
 
     const handleClick = (event) => 
     {
@@ -57,9 +50,9 @@ const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn}) => {
     const pasteXO = (index) => {
         const val = board[index[0]][index[1]];
         if (val === "X") {
-            return (<img src="src/assets/XImage.png" alt="X" />);
+            return (<p className='text-9xl nerko-one-regular text-red-500 md:scale-150 scale-125'>X</p>);
         } else if (val === "O") {
-            return (<img src="src/assets/OImage.png" alt="O" />);
+            return (<p className='text-9xl nerko-one-regular text-blue-500 md:scale-150 scale-125'>O</p>);
         } else {
             return null;
         }
