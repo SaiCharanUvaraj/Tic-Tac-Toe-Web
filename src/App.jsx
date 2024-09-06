@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import Header from './Header';
 import Board from './Board';
-import Xplayer from './Xplayer';
+import XPlayer from './XPlayer';
 import OPlayer from './OPlayer';
 
 const App = () => {
@@ -46,7 +46,7 @@ const App = () => {
       {windowWidth < 800 && 
         <div className='grid place-items-center pt-28 p-2'>
           <div className='flex flex-row justify-between items-center'>
-            <Xplayer />
+            <XPlayer />
             <OPlayer />
           </div>
           <Board board={board} setBoard={setBoard} filledSlots={filledSlots} setFilledSlots={setFilledSlots} turn={turn} setTurn={setTurn} />
