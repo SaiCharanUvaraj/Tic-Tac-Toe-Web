@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const Header = ({ board, setBoard, filledSlots, setFilledSlots,turn, setTurn}) => {
   const [isExpanded, setIsExpanded] = useState(true);

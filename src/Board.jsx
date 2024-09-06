@@ -1,4 +1,3 @@
-import React from 'react';
 import { useEffect, useState } from 'react';
 
 const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn}) => {

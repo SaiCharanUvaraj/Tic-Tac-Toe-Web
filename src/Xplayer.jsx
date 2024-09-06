@@ -1,5 +1,3 @@
-import React from 'react'
-
 const XPlayer = () => {
   return (
     <div className="">
