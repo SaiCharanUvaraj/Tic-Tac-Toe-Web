@@ -38,7 +38,7 @@ const App = () => {
       <Header board={board} setBoard={setBoard} filledSlots={filledSlots} setFilledSlots={setFilledSlots} turn={turn} setTurn={setTurn}/>
       {windowWidth > 800 && 
         <div className='flex flex-row justify-center items-center pt-28 space-x-10'>
-          <Xplayer />
+          <XPlayer />
           <Board board={board} setBoard={setBoard} filledSlots={filledSlots} setFilledSlots={setFilledSlots} turn={turn} setTurn={setTurn}/>
           <OPlayer />
         </div>

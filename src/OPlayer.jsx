@@ -3,7 +3,7 @@ import React from 'react'
 const OPlayer = () => {
   return (
     <div className="">
-        <img className="rounded-full" src='src/assets/O image.png'></img>
+        <img className="rounded-full" src='src/assets/OImage.png'></img>
     </div>
   )
 }

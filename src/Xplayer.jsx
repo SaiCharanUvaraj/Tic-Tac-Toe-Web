@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Xplayer = () => {
+const XPlayer = () => {
   return (
     <div className="">
-        <img className="rounded-full" src='src/assets/X image.png'></img>
+        <img className="rounded-full" src='src/assets/XImage.png'></img>
     </div>
   )
 }
 
-export default Xplayer
+export default XPlayer

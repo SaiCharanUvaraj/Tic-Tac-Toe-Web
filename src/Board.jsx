@@ -58,9 +58,9 @@ const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn}) => {
     const pasteXO = (index) => {
         const val = board[index[0]][index[1]];
         if (val === "X") {
-            return (<img src="src/assets/X image.png" alt="X" />);
+            return (<img src="src/assets/XImage.png" alt="X" />);
         } else if (val === "O") {
-            return (<img src="src/assets/O image.png" alt="O" />);
+            return (<img src="src/assets/OImage.png" alt="O" />);
         } else {
             return null;
         }
