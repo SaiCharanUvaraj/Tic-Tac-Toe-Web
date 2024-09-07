@@ -1,10 +1,3 @@
-/*
-const board=[
-    ["O",0,"O"],
-    [0,"O",0],
-    ["O",0,0] ]
-
-    */
 // for checking X winning
 const checkForWinnerAsX = (board) =>
 {

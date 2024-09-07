@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import * as game from './game';
 
 const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn,winner,setWinner}) => {
-    const click = new Audio("src/assets/Click.mp3");
-    const winning = new Audio("src/assets/Winning.wav");
-    const tie = new Audio("src/assets/Tie.wav");
+    const click = new Audio("src/assets/click.mp3");
+    const winning = new Audio("src/assets/winning.wav");
+    const tie = new Audio("src/assets/tie.wav");
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     
     useEffect(() => {
@@ -30,6 +30,7 @@ const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn,winner,s
         const r = parseInt(index.charAt(0), 10);
         const c = parseInt(index.charAt(1), 10);
         const newBoard = board.map(row => [...row]);
+        let newWinner="";
         const newFilledSlots =[...filledSlots,index]
         if (turn === "X") 
         {
@@ -40,6 +41,7 @@ const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn,winner,s
             {
                 winning.play();
                 setWinner("X");
+                newWinner="X";
                 localStorage.setItem("Winner",JSON.stringify("X"));
             }
             setTurn("O");
@@ -54,6 +56,7 @@ const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn,winner,s
             {
                 winning.play()
                 setWinner("O");
+                newWinner="O";
                 localStorage.setItem("Winner",JSON.stringify("O"));
             }
             setTurn("X");
@@ -63,6 +66,12 @@ const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn,winner,s
         setFilledSlots(newFilledSlots);
         localStorage.setItem('Board', JSON.stringify(newBoard));
         localStorage.setItem('FilledSlots', JSON.stringify(newFilledSlots));
+        if(newFilledSlots.length===9 && newWinner==="")
+        {
+            tie.play();
+            setWinner("tie");
+            localStorage.setItem("Winner",JSON.stringify("tie"));
+        }
     };
 
     const pasteXO = (index) => {
@@ -109,6 +118,9 @@ const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn,winner,s
             </div>
             {winner==="X" && <p className='mt-10 text-5xl text-center nerko-one-regular text-red-500 bg-white/10 backdrop-blur-xl border-2 border-white/30 p-5 rounded-lg'>X have won the game !!</p>}
             {winner==="O" && <p className='mt-10 text-5xl text-center nerko-one-regular text-blue-500 bg-white/10 backdrop-blur-xl border-2 border-white/30 p-5 rounded-lg'>O have won the game !!</p>}
+            {winner==="tie" && <p className='mt-10 text-5xl text-center nerko-one-regular text-black bg-white/10 backdrop-blur-xl border-2 border-white/30 p-5 rounded-lg'>The game have ended in tie !!</p>}
+            {winner==="" && turn==="X" && <p className='mt-10 text-5xl text-center nerko-one-regular text-red-500 bg-white/10 backdrop-blur-xl border-2 border-white/30 p-5 rounded-lg'>X's Turn</p>}
+            {winner==="" && turn==="O" && <p className='mt-10 text-5xl text-center nerko-one-regular text-blue-500 bg-white/10 backdrop-blur-xl border-2 border-white/30 p-5 rounded-lg'>O's Turn</p>}
         </div>
     );
 };
