@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
+import * as game from './game';
 
-const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn}) => {
+const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn,winner,setWinner}) => {
+    const click = new Audio("src/assets/Click.mp3");
+    const winning = new Audio("src/assets/Winning.wav");
+    const tie = new Audio("src/assets/Tie.wav");
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     
     useEffect(() => {
@@ -17,34 +21,48 @@ const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn}) => {
     {
         if (filledSlots.length === 9) 
             return;
-
         const index = event.target.id;
         const found = filledSlots.includes(index);
         if (found) 
             return;
-        else
+        if(winner!=="")
+            return;
+        const r = parseInt(index.charAt(0), 10);
+        const c = parseInt(index.charAt(1), 10);
+        const newBoard = board.map(row => [...row]);
+        const newFilledSlots =[...filledSlots,index]
+        if (turn === "X") 
         {
-            const r = parseInt(index.charAt(0), 10);
-            const c = parseInt(index.charAt(1), 10);
-            const newBoard = board.map(row => [...row]);
-            const newFilledSlots =[...filledSlots,index]
-            if (turn === "X") 
+            newBoard[r][c] = "X";
+            click.play();
+            const res=game.checkForWinnerAsX(newBoard)
+            if(res!="no")
             {
-                newBoard[r][c] = "X";
-                setTurn("O");
-                localStorage.setItem("Turn",JSON.stringify("O"));
-            } 
-            else if (turn === "O") 
-            {
-                newBoard[r][c] = "O";
-                setTurn("X");
-                localStorage.setItem("Turn",JSON.stringify("X"));
+                winning.play();
+                setWinner("X");
+                localStorage.setItem("Winner",JSON.stringify("X"));
             }
-            setBoard(newBoard);
-            setFilledSlots(newFilledSlots);
-            localStorage.setItem('Board', JSON.stringify(newBoard));
-            localStorage.setItem('FilledSlots', JSON.stringify(newFilledSlots));
+            setTurn("O");
+            localStorage.setItem("Turn",JSON.stringify("O"));
+        } 
+        if(turn === "O") 
+        {
+            newBoard[r][c] = "O";
+            click.play();
+            const res=game.checkForWinnerAsO(newBoard)
+            if(res!="no")
+            {
+                winning.play()
+                setWinner("O");
+                localStorage.setItem("Winner",JSON.stringify("O"));
+            }
+            setTurn("X");
+            localStorage.setItem("Turn",JSON.stringify("X"));
         }
+        setBoard(newBoard);
+        setFilledSlots(newFilledSlots);
+        localStorage.setItem('Board', JSON.stringify(newBoard));
+        localStorage.setItem('FilledSlots', JSON.stringify(newFilledSlots));
     };
 
     const pasteXO = (index) => {
@@ -59,7 +77,7 @@ const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn}) => {
     };
 
     return (
-        <div>
+        <div className='flex flex-col justify-center items-center'>
             <div className='grid grid-cols-3 gap-4'>
                 <div className={style} id="00" onClick={handleClick}>
                     {pasteXO([0, 0])}
@@ -89,6 +107,8 @@ const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn}) => {
                     {pasteXO([2, 2])}
                 </div>
             </div>
+            {winner==="X" && <p className='mt-10 text-5xl text-center nerko-one-regular text-red-500 bg-white/10 backdrop-blur-xl border-2 border-white/30 p-5 rounded-lg'>X have won the game !!</p>}
+            {winner==="O" && <p className='mt-10 text-5xl text-center nerko-one-regular text-blue-500 bg-white/10 backdrop-blur-xl border-2 border-white/30 p-5 rounded-lg'>O have won the game !!</p>}
         </div>
     );
 };

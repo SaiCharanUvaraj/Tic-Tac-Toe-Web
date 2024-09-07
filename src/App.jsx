@@ -19,6 +19,10 @@ const App = () => {
     const storedTurn = localStorage.getItem('Turn');
     return storedTurn ? JSON.parse(storedTurn) : "X";
   });
+  const [winner, setWinner] = useState(() => {
+    const storedWinner = localStorage.getItem('Winner');
+    return storedWinner ? JSON.parse(storedWinner) : "";
+  });
   
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -26,6 +30,7 @@ const App = () => {
     localStorage.setItem('Board', JSON.stringify(board));
     localStorage.setItem('FilledSlots', JSON.stringify(filledSlots));
     localStorage.setItem("Turn",JSON.stringify(turn));
+    localStorage.setItem("Winner",JSON.stringify(winner));
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -33,22 +38,23 @@ const App = () => {
 
   return (
     <div>
-      {/* Pass both filledSlots and setFilledSlots to Header */}
-      <Header board={board} setBoard={setBoard} filledSlots={filledSlots} setFilledSlots={setFilledSlots} turn={turn} setTurn={setTurn}/>
+      <Header board={board} setBoard={setBoard} filledSlots={filledSlots} setFilledSlots={setFilledSlots} turn={turn} setTurn={setTurn} winner={winner} setWinner={setWinner} />
+
       {windowWidth > 800 && 
         <div className='flex flex-row justify-center items-center pt-28 space-x-10'>
           <XPlayer />
-          <Board board={board} setBoard={setBoard} filledSlots={filledSlots} setFilledSlots={setFilledSlots} turn={turn} setTurn={setTurn}/>
+          <Board board={board} setBoard={setBoard} filledSlots={filledSlots} setFilledSlots={setFilledSlots} turn={turn} setTurn={setTurn} winner={winner} setWinner={setWinner}/>
           <OPlayer />
         </div>
       }
+      
       {windowWidth < 800 && 
         <div className='grid place-items-center pt-28 p-2'>
           <div className='flex flex-row justify-between items-center'>
             <XPlayer />
             <OPlayer />
           </div>
-          <Board board={board} setBoard={setBoard} filledSlots={filledSlots} setFilledSlots={setFilledSlots} turn={turn} setTurn={setTurn} />
+          <Board board={board} setBoard={setBoard} filledSlots={filledSlots} setFilledSlots={setFilledSlots} turn={turn} setTurn={setTurn} winner={winner} setWinner={setWinner}/>
         </div>
       }
     </div>
