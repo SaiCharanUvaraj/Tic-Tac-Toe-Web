@@ -1,12 +1,10 @@
 import { useState,useEffect } from 'react';
 
 const Header = ({ board, setBoard, filledSlots, setFilledSlots,turn, setTurn,winner,setWinner}) => {
-  const click = new Audio("src/assets/click.mp3");
   const [isExpanded, setIsExpanded] = useState(true);
   const [isResumed, setIsResumed] = useState(false);
   
   const handleNewGame = () => {
-    click.play()
     setBoard([[0, 0, 0], [0, 0, 0], [0, 0, 0]]);
     setFilledSlots([]);
     setTurn("X");
@@ -18,18 +16,15 @@ const Header = ({ board, setBoard, filledSlots, setFilledSlots,turn, setTurn,win
   };
 
   const handlePause = () => {
-    click.play();
     setIsResumed(true);
     setIsExpanded(true);
   };
 
   const handlePlayNow = () =>{
-    click.play()
     setIsExpanded(false);
   };
 
   const handleResume = () => {
-    click.play()
     setIsResumed(false);
     setIsExpanded(false);
   };

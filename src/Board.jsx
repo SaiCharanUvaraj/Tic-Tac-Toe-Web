@@ -2,9 +2,6 @@ import { useEffect, useState } from 'react';
 import * as game from './game';
 
 const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn,winner,setWinner}) => {
-    const click = new Audio("src/assets/click.mp3");
-    const winning = new Audio("src/assets/winning.wav");
-    const tie = new Audio("src/assets/tie.wav");
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     
     useEffect(() => {
@@ -35,11 +32,9 @@ const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn,winner,s
         if (turn === "X") 
         {
             newBoard[r][c] = "X";
-            click.play();
             const res=game.checkForWinnerAsX(newBoard)
             if(res!="no")
             {
-                winning.play();
                 setWinner("X");
                 newWinner="X";
                 localStorage.setItem("Winner",JSON.stringify("X"));
@@ -50,11 +45,9 @@ const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn,winner,s
         if(turn === "O") 
         {
             newBoard[r][c] = "O";
-            click.play();
             const res=game.checkForWinnerAsO(newBoard)
             if(res!="no")
             {
-                winning.play()
                 setWinner("O");
                 newWinner="O";
                 localStorage.setItem("Winner",JSON.stringify("O"));
@@ -68,7 +61,6 @@ const Board = ({board,setBoard,filledSlots,setFilledSlots,turn, setTurn,winner,s
         localStorage.setItem('FilledSlots', JSON.stringify(newFilledSlots));
         if(newFilledSlots.length===9 && newWinner==="")
         {
-            tie.play();
             setWinner("tie");
             localStorage.setItem("Winner",JSON.stringify("tie"));
         }
